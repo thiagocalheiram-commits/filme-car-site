@@ -125,10 +125,16 @@
         <li>Seg a Sáb, 8h às 18h</li>
       </ul>
     </div>
-    <div class="hero-media">
+    <div class="hero-media" id="hero-sol" style="--p:0">
+      <svg class="sol" id="sol" viewBox="-100 -100 200 200" aria-hidden="true">
+        <defs>
+          <radialGradient id="solCore" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff3b0"/><stop offset=".45" stop-color="#ffd23f"/><stop offset="1" stop-color="#f29e05"/></radialGradient>
+          <linearGradient id="solRay" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f6a90a"/><stop offset="1" stop-color="#ffd84d"/></linearGradient>
+        </defs>
+        <g class="sol-rays" id="sol-rays"></g>
+        <circle class="sol-core" r="44" fill="url(#solCore)"/>
+      </svg>
       <figure class="hero-photo">
-        <span class="film-tag film-tag-l">Vidro de fábrica</span>
-        <span class="film-tag film-tag-r">Com película <b>G20</b></span>
         <img src="images/servico-1.webp" alt="Aplicador da Filme Car instalando película no vidro traseiro de um carro" width="680" height="382" fetchpriority="high" decoding="async">
       </figure>
     </div>
@@ -1235,3 +1241,4 @@
 <script src="script.js"></script>
 <script src="ferramentas.js"></script>
 <script src="orcamento.js"></script>
+<script src="sol.js"></script>
