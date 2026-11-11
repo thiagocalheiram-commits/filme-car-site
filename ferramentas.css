@@ -280,11 +280,11 @@
 
 /* Etiquetas dos vidros no simulador */
 .sim-pill rect { fill: rgba(10,20,32,0.88); stroke: rgba(242,183,5,0.4); }
-.pill-k { font: 700 9px Poppins, sans-serif; letter-spacing: 1px; fill: #a3afbc; text-anchor: middle; }
-.pill-v { font: 700 14px Oswald, sans-serif; fill: #ffd23f; text-anchor: middle; }
+.pill-k { font: 700 9px Archivo, sans-serif; letter-spacing: 1px; fill: #a3afbc; text-anchor: middle; }
+.pill-v { font: 800 14px Archivo, sans-serif; fill: #ffd23f; text-anchor: middle; }
 
 /* cobertura */
-.coverage{margin-top:32px;padding:26px;border-radius:var(--radius);border:1px dashed var(--line-gold);background:rgba(242,183,5,0.05);}
+.coverage{margin-top:32px;padding:26px;border-radius:var(--radius);border:1px solid var(--line);background:var(--navy-900);}
 .coverage-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px;}
 .coverage-head svg{color:var(--gold);flex-shrink:0;margin-top:4px;}
 .coverage-head h3{font-size:1.3rem;margin-bottom:4px;}
