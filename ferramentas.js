@@ -27,13 +27,12 @@
      ========================================================= */
   var sim = $('#sim');
   if (sim) {
-    var GLASS = 0.88; /* vidro de fábrica deixa passar cerca de 88% da luz */
+    var GLASS = 1; /* mostra a luz que passa pela película escolhida (G70 = 70%) */
     var LIMITS = { side: 70, wind: 70 };
     var NOTES = {
       100: 'Sem película: vidro de fábrica, sem privacidade extra e sem bloqueio de calor.',
-      50: 'Discreto: escurece pouco e mantém ótima visão, dentro e fora.',
       35: 'Equilibrado: boa privacidade e boa visão à noite. É o mais pedido atrás.',
-      20: 'Escuro: muita privacidade, mas pede mais atenção ao dirigir à noite.',
+      28: 'Escuro: muita privacidade, no limite do que a lei permite atrás. Pede mais atenção à noite.',
       5: 'Limousine: privacidade máxima e pouquíssima visão para fora, principalmente à noite.'
     };
     var COLORS = {
@@ -43,7 +42,7 @@
       preto: ['#566070', '#252a32', '#0b0e12'],
       vermelho: ['#f2606b', '#c4202e', '#7d0f1b']
     };
-    var state = { side: 35, wind: 90, view: 'out', time: 'day' };
+    var state = { side: 35, wind: 70, view: 'out', time: 'day' };
 
     var stage = $('#sim-stage');
     var outSvg = $('#sim-out');
@@ -82,13 +81,13 @@
       if (key === 'side') {
         if (total >= 70) return { ok: true, html: '<span class="legal-ico">✓</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Dentro do limite em todas as janelas.</span>' };
         if (total >= 28) return { ok: false, html: '<span class="legal-ico">!</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Vale para as <strong>traseiras e o vidro de trás</strong> (mín. 28%). Nas portas da frente o mínimo é 70%: aplicamos só película clara ali.</span>' };
-        return { ok: false, html: '<span class="legal-ico">!</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Abaixo do mínimo legal de 28% em qualquer janela. Escolha G35 ou mais clara.</span>' };
+        return { ok: false, html: '<span class="legal-ico">!</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Abaixo do mínimo legal de 28% em qualquer janela. Escolha G28 ou mais clara.</span>' };
       }
       var min = LIMITS[key];
       if (total >= min) {
         return { ok: true, html: '<span class="legal-ico">✓</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Dentro do mínimo de ' + min + '%.</span>' };
       }
-      return { ok: false, html: '<span class="legal-ico">!</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Abaixo do mínimo legal de ' + min + '%. No para-brisa, a lei pede G80 ou mais clara.</span>' };
+      return { ok: false, html: '<span class="legal-ico">!</span><span>Cerca de <strong>' + total + '%</strong> da luz passa. Abaixo do mínimo legal de ' + min + '%. No para-brisa, a lei pede G70.</span>' };
     }
 
     function render() {
@@ -117,16 +116,16 @@
       });
 
       $$('.preset').forEach(function (b) {
-        b.classList.toggle('is-on', +b.dataset.side === state.side && state.wind === 90);
+        b.classList.toggle('is-on', +b.dataset.side === state.side && state.wind === 70);
       });
 
       var text = 'Laterais em <strong>' + filmName('side', state.side) + '</strong>. ' + NOTES[state.side];
-      if (state.view === 'in' && state.time === 'night' && state.side <= 20) {
+      if (state.view === 'in' && state.time === 'night' && state.side <= 28) {
         text += ' À noite, essa película reduz bastante a visão para fora.';
-      } else if (state.view === 'out' && state.side <= 20) {
+      } else if (state.view === 'out' && state.side <= 28) {
         text += ' Veja como o interior some atrás do vidro.';
       }
-      if (state.wind < 80) text += ' O para-brisa em ' + filmName('wind', state.wind) + ' fica abaixo do limite legal.';
+      if (state.wind < 70) text += ' O para-brisa em ' + filmName('wind', state.wind) + ' fica abaixo do limite legal.';
       captionEl.innerHTML = text;
 
       var label = 'Laterais: ' + filmName('side', state.side) + '. Para-brisa: ' + filmName('wind', state.wind) + '.';
@@ -159,7 +158,7 @@
     $$('.preset').forEach(function (b) {
       b.addEventListener('click', function () {
         state.side = +b.dataset.side;
-        state.wind = 90;
+        state.wind = 70;
         render();
       });
     });
