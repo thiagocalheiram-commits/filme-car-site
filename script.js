@@ -113,3 +113,17 @@ lightbox.addEventListener('touchend', e => {
   if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
   touchX = null;
 });
+
+/* Trabalhos com mais de uma foto: carrossel dentro do próprio card */
+document.querySelectorAll('.work[data-multi]').forEach(work => {
+  const track = work.querySelector('.work-track');
+  const dots = [...work.querySelectorAll('.work-dots i')];
+  const n = dots.length;
+  const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+  const go = i => track.scrollTo({ left: ((i + n) % n) * track.clientWidth, behavior: 'smooth' });
+  const mark = () => { const i = idx(); dots.forEach((d, k) => d.classList.toggle('on', k === i)); };
+  work.querySelector('.work-prev').addEventListener('click', () => go(idx() - 1));
+  work.querySelector('.work-next').addEventListener('click', () => go(idx() + 1));
+  track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+  mark();
+});
