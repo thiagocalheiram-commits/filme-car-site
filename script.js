@@ -127,3 +127,21 @@ document.querySelectorAll('.work[data-multi]').forEach(work => {
   track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
   mark();
 });
+
+/* Vídeo na galeria: só baixa e toca quando aparece na tela; toque pausa/retoma */
+document.querySelectorAll('.work-video').forEach(work => {
+  const v = work.querySelector('video');
+  const btn = work.querySelector('.work-play');
+  let userPaused = false;
+  const sync = () => { work.classList.toggle('paused', v.paused); btn.setAttribute('aria-label', v.paused ? 'Tocar vídeo' : 'Pausar vídeo'); };
+  v.addEventListener('play', sync); v.addEventListener('pause', sync);
+  btn.addEventListener('click', () => { if (v.paused) { userPaused = false; v.play(); } else { userPaused = true; v.pause(); } });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduce) {
+    new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting && !userPaused) v.play().catch(() => {});
+      else if (!e.isIntersecting) v.pause();
+    }), { threshold: 0.5 }).observe(work);
+  }
+  sync();
+});
