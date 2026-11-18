@@ -1232,3 +1232,5 @@ body { line-height: 1.55; }
 }
 .work-video.paused .work-play::after { opacity: 1; }
 .work-video .gallery-tag, .work-video .gallery-cap { z-index: 2; }
+/* celular: sem setas por cima da foto (passa com o dedo; os pontinhos mostram a posição) */
+@media (max-width: 640px) { .work-nav { display: none; } .work-dots i { width: 7px; height: 7px; } .work-dots i.on { width: 20px; } }
