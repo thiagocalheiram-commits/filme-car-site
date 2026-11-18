@@ -66,10 +66,11 @@ let lastFocus = null;
 
 function show(i) {
   current = (i + items.length) % items.length;
-  const img = items[current].querySelector('img');
-  lbImg.src = img.src;
+  const it = items[current];
+  const img = it.querySelector('img');
+  lbImg.src = it.dataset.full || img.src;
   lbImg.alt = img.alt;
-  lbCap.textContent = items[current].querySelector('.gallery-cap')?.textContent || '';
+  lbCap.textContent = it.dataset.cap || it.querySelector('.gallery-cap')?.textContent || '';
 }
 
 function openLightbox(i) {
